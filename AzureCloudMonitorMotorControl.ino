@@ -30,4 +30,8 @@ void loop() {
   Serial.print(alarmMode);
   Serial.println(" ");
 
+  rotateToNextDigit(1, 10);
+
+  delay(1000);
+
 }

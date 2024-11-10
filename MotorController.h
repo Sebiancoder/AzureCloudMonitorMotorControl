@@ -135,7 +135,7 @@ void step(int motor, int stepPhase) {
 
 }
 
-void rotateToNextDigit(int motor, int stepDelay);
+void rotateToNextDigit(int motor, int stepDelay) {
 
   //rotating to next digit means rotating 36 degrees
   
@@ -149,3 +149,5 @@ void rotateToNextDigit(int motor, int stepDelay);
     delay(stepDelay);
 
   }
+
+}
