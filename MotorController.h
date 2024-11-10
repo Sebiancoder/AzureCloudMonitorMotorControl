@@ -30,6 +30,7 @@ const int STEPS_PER_DIGIT = 20;
 
 void initMotors();
 void step(int motor, int stepPhase);
+void stepFullCycle(int motor, int stepDelay);
 void rotateToNextDigit(int motor, int stepDelay);
 
 void initMotors() {
@@ -110,12 +111,12 @@ void step(int motor, int stepPhase) {
     case 1:
       digitalWrite(aplus_pin, HIGH); 
       digitalWrite(aminus_pin, LOW);
-      digitalWrite(bplus_pin, HIGH); 
+      digitalWrite(bplus_pin, LOW); 
       digitalWrite(bminus_pin, LOW);
       break;
     case 2:
       digitalWrite(aplus_pin, LOW); 
-      digitalWrite(aminus_pin, HIGH);
+      digitalWrite(aminus_pin, LOW);
       digitalWrite(bplus_pin, HIGH); 
       digitalWrite(bminus_pin, LOW);
       break;
@@ -123,10 +124,10 @@ void step(int motor, int stepPhase) {
       digitalWrite(aplus_pin, LOW); 
       digitalWrite(aminus_pin, HIGH);
       digitalWrite(bplus_pin, LOW); 
-      digitalWrite(bminus_pin, HIGH);
+      digitalWrite(bminus_pin, LOW);
       break;
     case 4:
-      digitalWrite(aplus_pin, HIGH); 
+      digitalWrite(aplus_pin, LOW); 
       digitalWrite(aminus_pin, LOW);
       digitalWrite(bplus_pin, LOW); 
       digitalWrite(bminus_pin, HIGH);
@@ -135,18 +136,24 @@ void step(int motor, int stepPhase) {
 
 }
 
+void stepFullCycle(int motor, int stepDelay) {
+
+  for (int i = 0; i < 4; i++) {
+
+    step(motor, i);
+    delay(stepDelay);
+
+  }
+
+}
+
 void rotateToNextDigit(int motor, int stepDelay) {
 
   //rotating to next digit means rotating 36 degrees
-  
-
-  int stepPhase = 1;
 
   for (int i = 0; i < STEPS_PER_DIGIT; i++) {
 
-    step(motor, stepPhase);
-    stepPhase = (stepPhase + 1) % 4;
-    delay(stepDelay);
+    stepFullCycle(motor, stepDelay);
 
   }
 
