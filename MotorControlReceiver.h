@@ -2,8 +2,10 @@
 
 extern float currCost;
 extern bool alarmMode;
+extern int alarmValue;
 
 void receiveMessage(int bytes);
+void sendCurrValue();
 
 void receiveMessage(int bytes) {
 
@@ -18,6 +20,20 @@ void receiveMessage(int bytes) {
     currCost = ((highByte << 8) | lowByte) / 100.0;
 
     alarmMode = (alarmByte == 1);
+
+  }
+
+}
+
+void sendCurrValue() {
+
+  for (int i = 0; i < sizeof(int); i++) {
+
+    byte highByte = (alarmValue >> 8) & 0xFF;
+    byte lowByte = alarmValue & 0xFF;
+
+    Wire.write(highByte);
+    Wire.write(lowByte);
 
   }
 
